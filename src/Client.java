@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 public class Client {
 
     public static void main(String[] args) {
-        List<Point> points = createListPoint(args[0]);
-
-
+        final List<Point> points = readListPoint(args[0]);
+        final List<Point> result = QuickHull.execute(points);
+        result.forEach(System.out::println);
     }
 
-    private static List<Point> createListPoint(final String s) {
+    private static List<Point> readListPoint(final String s) {
         List<Point> points = null;
         try {
             points = Files.lines(Paths.get(s), StandardCharsets.UTF_8)

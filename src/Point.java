@@ -24,9 +24,12 @@ class Point {
                 .subtract((p2.y.subtract(p1.y)).multiply(this.x.subtract(p1.x)));
     }
 
-    boolean furtherFromLine(final Point pLine1, final Point pLine2, final Point p) {
-        return ((pLine2.y.subtract(pLine1.y)).multiply(this.x.subtract(p.getX())))
-                .compareTo((pLine2.x.subtract(pLine1.x)).multiply(this.y.subtract(p.getY()))) > 0;
+    int furtherFromLine(final Point pLine1, final Point pLine2, final Point p) {
+        BigInteger d1 = ((pLine2.y.subtract(pLine1.y)).multiply(this.x)).
+                subtract((pLine2.x.subtract(pLine1.x)).multiply(this.y)).abs();
+        BigInteger d2 = ((pLine2.y.subtract(pLine1.y)).multiply(p.getX())).
+                subtract((pLine2.x.subtract(pLine1.x)).multiply(p.getY())).abs();
+        return d1.compareTo(d2);
     }
 
     @Override
@@ -36,6 +39,14 @@ class Point {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 
     BigInteger getX() {

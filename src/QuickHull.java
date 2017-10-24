@@ -3,7 +3,7 @@ import java.util.List;
 
 public class QuickHull {
 
-    public static List<Integer> execute(final List<Point> pointValues) {
+    public static List<Point> execute(final List<Point> pointValues) {
         Point leftmostPoint = pointValues.get(0);
         Point rightmostPoint = pointValues.get(0);
         for (Point point : pointValues) {
@@ -14,35 +14,55 @@ public class QuickHull {
             }
         }
 
-        final List<Integer> indicesLeftOfLinePoints = new ArrayList<>();
-        final List<Integer> indicesRightOfLinePoints = new ArrayList<>();
-        for (int i = 0; i < pointValues.size(); i++) {
-            final Point point = pointValues.get(i);
+        final List<Point> leftOfLinePoints = new ArrayList<>();
+        final List<Point> rightOfLinePoints = new ArrayList<>();
+        for (Point point : pointValues) {
             if (point.equals(leftmostPoint) || point.equals(rightmostPoint)) {
                 continue;
             }
             if (point.isLeftOfLine(leftmostPoint, rightmostPoint)) {
-                indicesLeftOfLinePoints.add(i);
+                leftOfLinePoints.add(point);
             } else {
-                indicesRightOfLinePoints.add(i);
+                rightOfLinePoints.add(point);
             }
         }
 
-        final List<Integer> resultIndices = new ArrayList<>();
-        resultIndices.add(pointValues.indexOf(leftmostPoint));
-        final List<Integer> leftResult = recursion(pointValues, indicesLeftOfLinePoints, leftmostPoint, rightmostPoint);
-        if (leftResult != null)
-            resultIndices.addAll(leftResult);
-        resultIndices.add(pointValues.indexOf(rightmostPoint));
-        final List<Integer> rightResult = recursion(pointValues, indicesRightOfLinePoints, rightmostPoint, leftmostPoint);
-        if (rightResult != null)
-            resultIndices.addAll(rightResult);
-        return resultIndices;
+        final List<Point> result = new ArrayList<>();
+        result.add(leftmostPoint);
+        result.addAll(recursion(leftOfLinePoints, leftmostPoint, rightmostPoint));
+        result.add(rightmostPoint);
+        result.addAll(recursion(rightOfLinePoints, rightmostPoint, leftmostPoint));
+        return result;
     }
 
-    private static List<Integer> recursion(List<Point> pointValues, List<Integer> indicesLeftOfLinePoints,
-                                           Point leftmostPoint, Point rightmostPoint) {
-        return null;
+
+    private static List<Point> recursion(List<Point> points, Point leftmostPoint, Point rightmostPoint) {
+        List<Point> result = new ArrayList<>();
+        if (points.isEmpty())
+            return result;
+        if (points.size() < 2) {
+            result.add(points.get(0));
+            return result;
+        }
+
+        Point farthestPoint = points.stream().max((p1, p2) ->
+                p1.furtherFromLine(leftmostPoint, rightmostPoint, p2)).get();
+        points.remove(farthestPoint);
+
+        final List<Point> leftOfLinePoints = new ArrayList<>();
+        final List<Point> rightOfLinePoints = new ArrayList<>();
+        for (Point point : points) {
+            if (point.isLeftOfLine(leftmostPoint, farthestPoint)) {
+                leftOfLinePoints.add(point);
+            } else if (point.isLeftOfLine(farthestPoint, rightmostPoint)){
+                rightOfLinePoints.add(point);
+            }
+        }
+
+        result.addAll(recursion(leftOfLinePoints, leftmostPoint, farthestPoint));
+        result.add(farthestPoint);
+        result.addAll(recursion(rightOfLinePoints, farthestPoint, rightmostPoint));
+        return result;
     }
 
 }
