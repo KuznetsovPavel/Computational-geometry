@@ -1,5 +1,7 @@
 package main;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,7 +14,26 @@ public class Client {
     public static void main(String[] args) {
         final List<Point> points = readListPoint(args[0]);
         final List<Integer> result = new QuickHull(points).execute();
-        result.stream().forEach(i -> System.out.println(points.get(i)));
+        write(args[0], result);
+    }
+
+    private static void write(String arg, List<Integer> result) {
+        try (final BufferedWriter writer = new BufferedWriter(
+                new FileWriter("res-" + arg))) {
+            result.stream()
+                    .map(i -> i + 1)
+                    .map(Object::toString)
+                    .map(s -> s + "\n")
+                    .forEach(c -> {
+                try {
+                    writer.write(c);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static List<Point> readListPoint(final String s) {
