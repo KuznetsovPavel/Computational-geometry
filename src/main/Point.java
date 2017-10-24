@@ -27,11 +27,12 @@ public class Point {
     }
 
     int furtherFromLine(final Point pLine1, final Point pLine2, final Point p) {
-        BigInteger d1 = ((pLine2.y.subtract(pLine1.y)).multiply(this.x)).
-                subtract((pLine2.x.subtract(pLine1.x)).multiply(this.y)).abs();
-        BigInteger d2 = ((pLine2.y.subtract(pLine1.y)).multiply(p.getX())).
-                subtract((pLine2.x.subtract(pLine1.x)).multiply(p.getY())).abs();
-        return d1.compareTo(d2);
+        BigInteger common = pLine2.x.multiply(pLine1.y).subtract((pLine2.y).multiply(pLine1.x));
+        BigInteger dist1 = ((pLine2.y.subtract(pLine1.y)).multiply(this.x)).
+                subtract((pLine2.x.subtract(pLine1.x)).multiply(this.y)).add(common).abs();
+        BigInteger dist2 = ((pLine2.y.subtract(pLine1.y)).multiply(p.getX())).
+                subtract((pLine2.x.subtract(pLine1.x)).multiply(p.getY())).add(common).abs();
+        return dist1.compareTo(dist2);
     }
 
     @Override

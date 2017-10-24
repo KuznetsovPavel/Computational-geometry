@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Client {
@@ -12,7 +12,7 @@ public class Client {
     public static void main(String[] args) {
         final List<Point> points = readListPoint(args[0]);
         final List<Integer> result = new QuickHull(points).execute();
-        result.forEach(System.out::println);
+        result.stream().forEach(i -> System.out.println(points.get(i)));
     }
 
     private static List<Point> readListPoint(final String s) {

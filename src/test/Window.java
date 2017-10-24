@@ -41,8 +41,8 @@ public class Window extends JFrame{
         BigInteger scaleX = maxX.subtract(minX);
         BigInteger scaleY = maxY.subtract(minY);
         for (Point point : points) {
-            g.fillOval(point.getX().multiply(BigInteger.valueOf(SCALE)).divide(maxX).intValue(),
-                    point.getY().multiply(BigInteger.valueOf(SCALE)).divide(maxY).intValue(),
+            g.fillOval(point.getX().multiply(BigInteger.valueOf(SCALE)).divide(scaleX).intValue(),
+                    point.getY().multiply(BigInteger.valueOf(SCALE)).divide(scaleY).intValue(),
                     10, 10);
         }
         int earlyIndex = indeces.get(0);

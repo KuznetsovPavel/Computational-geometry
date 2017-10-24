@@ -43,7 +43,8 @@ public class QuickHull {
         return result;
     }
 
-    private List<Integer> recursion(List<Integer> indecisPoints, Point leftmostPoint, Point rightmostPoint) {
+    private List<Integer> recursion(final List<Integer> indecisPoints,
+                                    final Point leftmostPoint, final Point rightmostPoint) {
         List<Integer> result = new ArrayList<>();
         if (indecisPoints.isEmpty())
             return result;
@@ -54,6 +55,7 @@ public class QuickHull {
 
         int farthestPointIndex = indecisPoints.stream().max((p1, p2) ->
                 points.get(p1).furtherFromLine(leftmostPoint, rightmostPoint, points.get(p2))).get();
+
         indecisPoints.remove((Integer)farthestPointIndex);
         Point farthestPoint = points.get(farthestPointIndex);
 
