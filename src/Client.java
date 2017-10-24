@@ -9,7 +9,7 @@ public class Client {
 
     public static void main(String[] args) {
         final List<Point> points = readListPoint(args[0]);
-        final List<Point> result = QuickHull.execute(points);
+        final List<Integer> result = new QuickHull(points).execute();
         result.forEach(System.out::println);
     }
 
