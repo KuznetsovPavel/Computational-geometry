@@ -1,11 +1,13 @@
+package main;
+
 import java.math.BigInteger;
 
-class Point {
+public class Point {
 
     private final BigInteger x;
     private final BigInteger y;
 
-    Point(final BigInteger x, final BigInteger y) {
+    public Point(final BigInteger x, final BigInteger y) {
         this.x = x;
         this.y = y;
     }
@@ -43,17 +45,17 @@ class Point {
 
     @Override
     public String toString() {
-        return "Point{" +
+        return "main.Point{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';
     }
 
-    BigInteger getX() {
+    public BigInteger getX() {
         return x;
     }
 
-    BigInteger getY() {
+    public BigInteger getY() {
         return y;
     }
 }
