@@ -43,7 +43,7 @@ public class Client {
                     .map(Point::parsePoint)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            System.err.println("Can not read file");
+            System.err.println("Incorrect file");
             e.printStackTrace();
         }
         return points;

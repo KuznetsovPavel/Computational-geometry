@@ -10,8 +10,8 @@ import java.util.Random;
 public class Test {
 
     public static void main(String[] args) {
-        final int SIZE = 40;
-        final int BITS = 10;
+        final int SIZE = 10;
+        final int BITS = 12;
         Random random = new Random();
         Window window = new Window(500, 500);
         ArrayList<Point> points = new ArrayList<>();
