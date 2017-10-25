@@ -24,14 +24,15 @@ public class QuickHull {
 
         final List<Integer> indicesLeftOfLinePoints = new ArrayList<>();
         final List<Integer> indicesRightOfLinePoints = new ArrayList<>();
-        for (Point point : points) {
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
             if (point.equals(leftmostPoint) || point.equals(rightmostPoint)) {
                 continue;
             }
             if (point.isLeftOfLine(leftmostPoint, rightmostPoint)) {
-                indicesLeftOfLinePoints.add(points.indexOf(point));
+                indicesLeftOfLinePoints.add(i);
             } else {
-                indicesRightOfLinePoints.add(points.indexOf(point));
+                indicesRightOfLinePoints.add(i);
             }
         }
 
